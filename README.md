@@ -80,6 +80,7 @@ php artisan migrate --seed
 
 ```bash
 npm run build
+php artisan livewire:publish --assets
 ```
 
 6. Jalankan aplikasi:
@@ -111,6 +112,24 @@ php artisan attendance:mark-absent --date=2026-05-12
 ```
 
 Scheduler akan menjalankan command setiap hari pukul 07:00 dan melewati hari libur atau hari di luar mode sekolah.
+
+## Catatan cPanel
+
+Jika halaman tampil tetapi tombol Livewire tidak bereaksi, pastikan:
+
+- Folder `public/build` sudah terupload.
+- Folder `public/vendor/livewire` sudah terupload, atau jalankan `php artisan livewire:publish --assets`.
+- `APP_URL` di `.env` berisi domain HTTPS yang benar.
+- Setelah upload perubahan, jalankan:
+
+```bash
+php artisan optimize:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+```
+
+Di browser, cek DevTools > Network. Request ke `vendor/livewire/livewire.min.js` dan `livewire-*/update` harus berstatus 200.
 
 ## Presensi Wajah
 
